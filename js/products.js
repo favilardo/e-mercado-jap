@@ -1,5 +1,5 @@
 //Armamos la URL de la categoria deseada
-const SPECIFIC_PRODUCTS_URL = PRODUCTS_URL + localStorage.getItem("catID")+ ".json";
+const SPECIFIC_PRODUCTS_URL = PRODUCTS_URL + localStorage.getItem("catID") + EXT_TYPE;
 
 //Siguiendo logica de Products.js iniciamos un array vacio donde luego guardaremos el array con todos los productos, y dejamos filtros indefinidos
 let currentProductsArray = [];
