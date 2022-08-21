@@ -108,7 +108,6 @@ document.addEventListener("DOMContentLoaded", function(e){
     getJSONData(SPECIFIC_PRODUCTS_URL).then(function(resultObj){
         if (resultObj.status === "ok"){
             currentProductsArray = resultObj.data.products;
-            console.log(resultObj.data);
 
             //Mostramos el nombre de la categoria
             let catTitle = document.getElementById("cat-title");
