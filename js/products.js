@@ -1,4 +1,4 @@
-//Armamos la URL de la categoria deseada
+//Armamos la URL de la categoria deseada con la constante de Productos "https://japceibal.github.io/emercado-api/cats_products/", su número guardado en localhost y el ".json" de EXT_TYPE
 const SPECIFIC_PRODUCTS_URL = PRODUCTS_URL + localStorage.getItem("catID") + EXT_TYPE;
 
 //Siguiendo logica de Products.js iniciamos un array vacio donde luego guardaremos el array con todos los productos, y dejamos filtros indefinidos
@@ -79,6 +79,7 @@ function showProductsList(){
                             <h4 class="mb-1">${product.name}</h4>
                             <small class="text-muted">${product.soldCount} vendidos</small>
                         </div>
+                        <p class="mb-1">${product.description}</p>
                         <p class="mb-1">${currencySymbol} ${separatedPrice}</p>
                     </div>
                 </div>
