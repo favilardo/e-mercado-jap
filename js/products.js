@@ -51,7 +51,6 @@ function showProductsList(){
 
     let htmlContentToAppend = "";
     for(let i = 0; i < currentProductsArray.length; i++){
-        //Paso extra respecto a Products.js ya que el objeto obtenido tiene otra info, por lo que el array esta en la propiedad ".products" del objeto
         let product = currentProductsArray[i];
         
         //Definimos el simbolo de moneda a mostrar
