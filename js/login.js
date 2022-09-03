@@ -5,7 +5,7 @@ document.addEventListener('submit', function(evento){
     let contrasena = document.getElementById("password");
 
     if (mail.value.length >= 1 && contrasena.value.length >= 1) {
-        localStorage.setItem("logIn", true);
+        localStorage.setItem("usuario", mail.value);
         window.location.href = "index.html";
     } else {
         alert("Alguno de los campos estaba vacio. Completa ambos campos para continuar.");
