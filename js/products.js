@@ -52,42 +52,44 @@ function showProductsList(){
     let htmlContentToAppend = "";
     for(let i = 0; i < currentProductsArray.length; i++){
         let product = currentProductsArray[i];
-        
-        //Definimos el simbolo de moneda a mostrar
-        let currencySymbol = "";
-        if (product.currency === "UYU") {
-            currencySymbol = "$";
-        } else {
-            currencySymbol = "USD";
-        }
 
-        //separamos los miles con puntos usando expresiones regulares
-        let separatedPrice = product.cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        if (document.getElementById('buscador').value === '' || product.name.toLowerCase().indexOf(document.getElementById('buscador').value.toLowerCase()) != -1 || product.description.toLowerCase().indexOf(document.getElementById('buscador').value.toLowerCase()) != -1) {
+            
+            //Definimos el simbolo de moneda a mostrar
+            let currencySymbol = "";
+            if (product.currency === "UYU") {
+                currencySymbol = "$";
+            } else {
+                currencySymbol = "USD";
+            }
 
-        if (((minCount == undefined) || (minCount != undefined && parseInt(product.cost) >= minCount)) &&
-            ((maxCount == undefined) || (maxCount != undefined && parseInt(product.cost) <= maxCount))){
+            //separamos los miles con puntos usando expresiones regulares
+            let separatedPrice = product.cost.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
-            htmlContentToAppend += `
-            <div onclick="setProdID(${product.id})" class="list-group-item list-group-item-action cursor-active">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="${product.image}" alt="${product.description}" class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">${product.name}</h4>
-                            <small class="text-muted">${product.soldCount} vendidos</small>
+            if (((minCount == undefined) || (minCount != undefined && parseInt(product.cost) >= minCount)) &&
+                ((maxCount == undefined) || (maxCount != undefined && parseInt(product.cost) <= maxCount))){
+
+                htmlContentToAppend += `
+                <div onclick="setProdID(${product.id})" class="list-group-item list-group-item-action cursor-active">
+                    <div class="row">
+                        <div class="col-3">
+                            <img src="${product.image}" alt="${product.description}" class="img-thumbnail">
                         </div>
-                        <p class="mb-1">${product.description}</p>
-                        <p class="mb-1">${currencySymbol} ${separatedPrice}</p>
+                        <div class="col">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h4 class="mb-1">${product.name}</h4>
+                                <small class="text-muted">${product.soldCount} vendidos</small>
+                            </div>
+                            <p class="mb-1">${product.description}</p>
+                            <p class="mb-1">${currencySymbol} ${separatedPrice}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            `
+                `
+            }  
         }
-
-        document.getElementById("prod-list-container").innerHTML = htmlContentToAppend;
     }
+    document.getElementById("prod-list-container").innerHTML = htmlContentToAppend;
 }
 
 function sortAndShowProducts(sortCriteria, productsArray){
@@ -102,6 +104,15 @@ function sortAndShowProducts(sortCriteria, productsArray){
     //Muestro las categorías ordenadas
     showProductsList();
 }
+
+/* function liveSearch(productsArray) {
+    if(productsArray != undefined){
+        currentProductsArray = productsArray;
+    }
+    const busqueda = getElementById('buscador').value.toLowerCase();
+    
+    currentProductsArray
+} */
 
 //Obtenemos el JSON mediante la funcion getJSONData de init.js y declaramos eventos para el filtro en productos
 document.addEventListener("DOMContentLoaded", function(e){
@@ -162,5 +173,9 @@ document.addEventListener("DOMContentLoaded", function(e){
 
         showProductsList();
     });
+
+    document.getElementById("buscador").addEventListener('input', function(params) {
+        showProductsList();
+    })
 
 });

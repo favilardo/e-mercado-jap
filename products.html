@@ -42,7 +42,7 @@
     </div>
     <div class="container">
       <div class="row">
-        <div class="col text-end">
+        <div class="col text-end mx-3">
           <div class="btn-group btn-group-toggle mb-4" data-bs-toggle="buttons">
             <input type="radio" class="btn-check" name="options" id="sortAsc">
             <label class="btn btn-light" for="sortAsc"><i class="fas fa-sort-amount-down mr-1">$</i></label>
@@ -54,8 +54,14 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container">
+        <div class="col-lg-11 offset-lg-2 col-md-12 mb-1 container">
           <div class="row container p-0 m-0">
+            <div class="col-2">
+              <p class="font-weight-normal text-end my-2">Buscador:</p>
+            </div>
+            <div class="col-4">
+              <input type="text" class="form-control" id="buscador">
+            </div>
             <div class="col">
               <p class="font-weight-normal text-end my-2">Precio:</p>
             </div>
