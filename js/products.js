@@ -53,6 +53,7 @@ function showProductsList(){
     for(let i = 0; i < currentProductsArray.length; i++){
         let product = currentProductsArray[i];
 
+        //En todo cambio del buscador va a ejecutarse. Determino condiciones para filtrar acorde a lo escrito en el campo del buscador
         if (document.getElementById('buscador').value === '' || product.name.toLowerCase().indexOf(document.getElementById('buscador').value.toLowerCase()) != -1 || product.description.toLowerCase().indexOf(document.getElementById('buscador').value.toLowerCase()) != -1) {
             
             //Definimos el simbolo de moneda a mostrar
