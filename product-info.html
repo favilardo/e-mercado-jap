@@ -37,10 +37,26 @@
     </div>
   </nav>
   <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
+    <div class="container" id="product-load">
+    </div>
+    <div class="container" id="comments-load">
+    </div>
+    <div class="container" id="comment-insert">
+      <h2 class="py-4">Comentar</h2>
+      <form action="">
+        <label class="form-label" for="comment-description">Tu opinión:</label>
+        <textarea class="form-control" name="description" id="comment-description" rows="3" cols="50"></textarea>
+        
+        <label class="form-label py-2" for="comment-score">Tu puntuación:</label>
+        <select class="form-select small-list" name="score" id="comment-score">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <button type="submit" class="btn btn-primary mb-3 my-2">Enviar</button>
+      </form>
     </div>
   </main>
   <footer class="text-muted">

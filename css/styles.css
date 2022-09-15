@@ -188,3 +188,21 @@ a.custom-card:hover {
 .checked {
   color: orange;
 }
+
+.images-row {
+  display: flex;
+}
+
+.images-column {
+  padding: 5px;
+  height: auto;
+}
+
+.comment-box {
+  padding: 1em 1em 0em 1em;
+  border: 1px solid #ccc;
+}
+
+.small-list {
+  max-width: 6%;
+}
