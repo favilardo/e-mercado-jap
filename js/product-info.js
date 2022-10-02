@@ -51,10 +51,12 @@ document.addEventListener("DOMContentLoaded", function(){
             //Cargo información al DOM.
             document.getElementById('product-load').innerHTML = productDataToAppend;
 
+            //Comienzo a crear sección de relacionados
             let relatedAppend = `<h2 class="py-4">Productos relacionados</h2>
             <div class="row row-cols-1 row-cols-2">
                 <div class="card-group">`;
 
+            //Un For para cada artículo en el array de relacionados
             for (relacionado of resultObj.data.relatedProducts) {
                 relatedAppend += `<div class="col mb-4">
                     <div class="card cursor-active" id="related${relacionado.id}" onClick='redirectToProductID(${relacionado.id})'>
@@ -68,6 +70,8 @@ document.addEventListener("DOMContentLoaded", function(){
             }
             relatedAppend += `</div>
             </div>`;
+
+            //Cargo info al DOM
             document.getElementById('related-products-load').innerHTML = relatedAppend;
         }
     });
