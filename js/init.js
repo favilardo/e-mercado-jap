@@ -23,7 +23,8 @@ function logOut() {
 addEventListener("DOMContentLoaded", function(params) {
   if (localStorage.getItem != null) {
     let listadoNav = document.getElementsByTagName("li");
-    /* listadoNav[3].setAttribute("class", "nav-item dropdwon"); */
+
+    //dropdown con las secciones desde init para cargar en cada web
     listadoNav[3].innerHTML += `<div class="dropdown">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
         ${localStorage.getItem("usuario")}
