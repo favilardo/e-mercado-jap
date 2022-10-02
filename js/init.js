@@ -16,7 +16,7 @@ let hideSpinner = function(){
 }
 
 function logOut() {
-  localStorage.clear;
+  localStorage.clear();
   window.location.href = "login.html";
 }
 
