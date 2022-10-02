@@ -2,7 +2,10 @@
 const SPECIFIC_PRODUCT_INFO_URL = PRODUCT_INFO_URL + localStorage.getItem("prodID") + EXT_TYPE;
 const SPECIFIC_PRODUCT_INFO_COMMENTS_URL = PRODUCT_INFO_COMMENTS_URL + localStorage.getItem("prodID") + EXT_TYPE;
 
-
+function redirectToProductID(id){
+    localStorage.setItem("prodID", id);
+    window.location.href = "product-info.html";
+}
 
 document.addEventListener("DOMContentLoaded", function(){
 
@@ -47,6 +50,25 @@ document.addEventListener("DOMContentLoaded", function(){
 
             //Cargo información al DOM.
             document.getElementById('product-load').innerHTML = productDataToAppend;
+
+            let relatedAppend = `<h2 class="py-4">Productos relacionados</h2>
+            <div class="row row-cols-1 row-cols-2">
+                <div class="card-group">`;
+
+            for (relacionado of resultObj.data.relatedProducts) {
+                relatedAppend += `<div class="col mb-4">
+                    <div class="card cursor-active" id="related${relacionado.id}" onClick='redirectToProductID(${relacionado.id})'>
+                        <img src="${relacionado.image}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">${relacionado.name}</p>
+                        </div>
+                    </div>
+                </div>
+                `;
+            }
+            relatedAppend += `</div>
+            </div>`;
+            document.getElementById('related-products-load').innerHTML = relatedAppend;
         }
     });
 

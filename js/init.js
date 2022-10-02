@@ -15,10 +15,25 @@ let hideSpinner = function(){
   document.getElementById("spinner-wrapper").style.display = "none";
 }
 
+function logOut() {
+  localStorage.clear;
+  window.location.href = "login.html";
+}
+
 addEventListener("DOMContentLoaded", function(params) {
   if (localStorage.getItem != null) {
     let listadoNav = document.getElementsByTagName("li");
-    listadoNav[3].innerHTML = `<a class="nav-link" href="my-profile.html">${localStorage.getItem("usuario")}</a>`;
+    /* listadoNav[3].setAttribute("class", "nav-item dropdwon"); */
+    listadoNav[3].innerHTML += `<div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        ${localStorage.getItem("usuario")}
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+      <li><a class="dropdown-item" href="cart.html">Mi carrito</a></li>
+      <li><a class="dropdown-item" href="my-profile.html">Mi perfil</a></li>
+      <li><a class="dropdown-item" href="#" onClick="logOut()">Cerrar sesion</a></li>
+      </ul>
+    </div> `;
   }
 })
 
