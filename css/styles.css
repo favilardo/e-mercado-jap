@@ -206,3 +206,12 @@ a.custom-card:hover {
 .small-list {
   max-width: 6%;
 }
+
+.img-cart{
+  max-height: 3em;
+  width: auto;
+}
+
+.cart-count{
+  width: 3em!important;
+}
