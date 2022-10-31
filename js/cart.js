@@ -6,11 +6,13 @@ function loadPrices() {
     let arraySubtotales = document.querySelectorAll(".item-subtotal");
     for (let itemSubtotal of arraySubtotales) {
         let wordsSubtotal = itemSubtotal.innerHTML.split(' ');
+        console.log(wordsSubtotal[1]);
         if (wordsSubtotal[0] === "USD") {
-            subtotal += +wordsSubtotal[1].replace(".","")
+            subtotal += +wordsSubtotal[1].replaceAll(".","")
         } else {
-            subtotal += +wordsSubtotal[1].replace(".","")/40;
+            subtotal += +wordsSubtotal[1].replaceAll(".","")/40;
         } 
+        console.log(subtotal);
     }
     document.getElementById("subtotal").innerHTML = `USD ${subtotal.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
     if (document.getElementById("shipment1").checked) {
@@ -23,7 +25,7 @@ function loadPrices() {
         shipment = subtotal*0.05;
         document.getElementById("shipping_ammount").innerHTML = `USD ${shipment.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
     }
-    document.getElementById("cart_total").innerHTML = `USD ${(subtotal+shipment).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`;
+    document.getElementById("cart_total").innerHTML = `<strong>USD ${(subtotal+shipment).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</strong>`;
 }
 
 function validatePayment() {
