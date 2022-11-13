@@ -52,9 +52,49 @@
   </nav>
   <main>
     <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+      <div class="text-center p-4">
+        <h2>Perfil</h2>
       </div>
+      <hr class="mt-4">
+
+      <div class="alert alert-success fade" role="alert">
+        Datos actualizados con éxito.
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+
+      <form id="dataForm">
+        <div class="row">
+          <div class="col-6">
+            <label class="form-label" for="firstName">Primer nombre*</label>
+            <input type="text" class="form-control" id="firstName" required>
+          </div>
+          <div class="col-6">
+            <label class="form-label" for="secondName">Segundo nombre</label>
+            <input type="text" class="form-control" id="secondName">
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-6">
+            <label class="form-label" for="lastName">Primer apellido*</label>
+            <input type="text" class="form-control" id="lastName" required>
+          </div>
+          <div class="col-6 mt-2">
+            <label class="form-label" for="lastName">Segundo apellido apellido</label>
+            <input type="text" class="form-control" id="secondLastName">
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-6">
+            <label class="form-label" for="email">Correo*</label>
+            <input type="email" class="form-control" id="email" required>
+          </div>
+          <div class="col-6">
+            <label class="form-label" for="celphone">Teléfono de contacto</label>
+            <input type="number" class="form-control scroll-hidden" id="phoneNumber">
+          </div>
+        </div>
+        <button class="btn btn-primary mt-4" type="submit" id="save">Guardar</button>
+      </form>
     </div>
   </main>
   <footer class="text-muted">
