@@ -2,10 +2,139 @@
 const SPECIFIC_PRODUCT_INFO_URL = PRODUCT_INFO_URL + localStorage.getItem("prodID") + EXT_TYPE;
 const SPECIFIC_PRODUCT_INFO_COMMENTS_URL = PRODUCT_INFO_COMMENTS_URL + localStorage.getItem("prodID") + EXT_TYPE;
 
+const COMMENT = document.getElementById("comment-description");
+const RATING = document.getElementById("comment-score");
+const FORM = document.getElementById("comment-form");
+
+let commentsStorage;
+let idObject = "id"+localStorage.getItem("prodID");
+if (localStorage.getItem("comments") != null) {
+    commentsStorage = JSON.parse(localStorage.getItem("comments"));
+} else {
+    commentsStorage = [];
+}
+
+
+
 function redirectToProductID(id){
     localStorage.setItem("prodID", id);
     window.location.href = "product-info.html";
 }
+
+function loadComments(obj, isItLoading){
+    //Empiezo a cargar info a variable.
+    let commentDataToAppend = ``;
+
+    if (isItLoading) {
+        //Creo condición por si hay o no hay comentarios.
+        if (obj.length === 0 && commentsStorage[idObject] === undefined) {
+            commentDataToAppend += `<div class="comment-box">
+            <p class="text-center">No hay comentarios aún</p>
+            </div>`;
+        } else {
+
+            //For para cargar cada comentario.
+            for (let comment of obj) {
+                commentDataToAppend += `<div class="comment-box">
+                    <p><strong>${comment.user}</strong> - ${comment.dateTime} - `;
+
+                //For para cargar estrellas
+                for (let contador = 1; contador <= 5; contador++){
+                    if (contador <= comment.score) {
+                        commentDataToAppend += `<span class="fa fa-star checked"></span>`;
+                    } else {
+                        commentDataToAppend += `<span class="fa fa-star"></span>`;
+                    }
+                }
+                
+                commentDataToAppend += `</p>
+                <p>${comment.description}</p>
+                    </div>
+                `;
+            }
+        }
+        document.getElementById('comments-load').innerHTML = commentDataToAppend;
+    } else {
+        commentDataToAppend += `<div class="comment-box">
+                <p><strong>${obj.user}</strong> - ${obj.dateTime} - `;
+
+            //For para cargar estrellas
+            for (let contador = 1; contador <= 5; contador++){
+                if (contador <= obj.score) {
+                    commentDataToAppend += `<span class="fa fa-star checked"></span>`;
+                } else {
+                    commentDataToAppend += `<span class="fa fa-star"></span>`;
+                }
+            }
+            
+            commentDataToAppend += `</p>
+            <p>${obj.description}</p>
+                </div>
+            `;
+        document.getElementById('comments-load').innerHTML += commentDataToAppend;
+    }
+
+   
+       
+
+}
+
+function saveComment() {
+    
+    let infoUser = JSON.parse(localStorage.getItem("usuario"));
+    var currentdate = new Date();
+
+    if (commentsStorage[idObject] === undefined) {
+
+        let comment = {
+            product: localStorage.getItem("prodID"),
+            score: RATING.value,
+            description: COMMENT.value,
+            user: infoUser.email,
+            dateTime: currentdate.getFullYear()+"-"+currentdate.getMonth()+"-"+ currentdate.getDay()+" "+currentdate.getHours()+":"+currentdate.getMinutes()+":"+currentdate.getSeconds()
+        };
+
+        commentsStorage = {
+            ...commentsStorage,
+            [idObject]: {
+                comment1: comment
+            }
+        };
+        loadComments(comment,false);
+    } else {
+
+        let idCommentNumber = Object.keys(commentsStorage[idObject]).length+1;
+        let idComment = 'comment'+idCommentNumber;
+        let comment = {
+            product: localStorage.getItem("prodID"),
+            score: RATING.value,
+            description: COMMENT.value,
+            user: infoUser.email,
+            dateTime: currentdate.getFullYear()+"-"+currentdate.getMonth()+"-"+ currentdate.getDay()+" "+currentdate.getHours()+":"+currentdate.getMinutes()+":"+currentdate.getSeconds()
+        };
+
+        commentsStorage[idObject] = {
+            ...commentsStorage[idObject],
+            [idComment]: comment
+        }
+        loadComments(comment,false);
+    }
+    alert('Comentario guardado');
+    localStorage.setItem("comments", JSON.stringify(commentsStorage));
+    RATING.value = 1;
+    COMMENT.value = '';
+}
+
+FORM.addEventListener('submit', (event) =>{
+    event.preventDefault();
+    event.stopPropagation();
+    if(COMMENT.value.length != 0){
+        saveComment();
+    }else{
+        alert("El comentario está vacío");
+    }
+});
+
 
 document.addEventListener("DOMContentLoaded", function(){
 
@@ -76,43 +205,18 @@ document.addEventListener("DOMContentLoaded", function(){
         }
     });
 
+    //Cargo info al localStorage si es que no la hay ya
+
     //Fetch para info de comentarios.
     getJSONData(SPECIFIC_PRODUCT_INFO_COMMENTS_URL).then(function(resultObj){
         if (resultObj.status === "ok"){
 
-            //Empiezo a cargar info a variable.
-            let commentDataToAppend = `<h2 class="py-4">Comentarios</h2>`;
-
-            //Creo condición por si hay o no hay comentarios.
-            if (resultObj.data.length === 0) {
-                commentDataToAppend += `<div class="comment-box">
-                <p class="text-center">No hay comentarios aún</p>
-                </div>`;
-            } else {
-
-                //For para cargar cada comentario.
-                for (let comment of resultObj.data) {
-                    commentDataToAppend += `<div class="comment-box">
-                        <p><strong>${comment.user}</strong> - ${comment.dateTime} - `;
-
-                    //For para cargar estrellas
-                    for (let contador = 1; contador <= 5; contador++){
-                        if (contador <= comment.score) {
-                            commentDataToAppend += `<span class="fa fa-star checked"></span>`;
-                        } else {
-                            commentDataToAppend += `<span class="fa fa-star"></span>`;
-                        }
-                    }
-                    
-                    commentDataToAppend += `</p>
-                    <p>${comment.description}</p>
-                        </div>
-                    `;
-                }
+            loadComments(resultObj.data, true);
+            console.log(Object.entries(commentsStorage[idObject]));
+            for (const objeto of Object.entries(commentsStorage[idObject])) {
+                console.log(objeto[1]);
+                loadComments(objeto[1], false);
             }
-
-            //Cargo info al DOM
-            document.getElementById('comments-load').innerHTML = commentDataToAppend;
         }
     });
 });
