@@ -165,17 +165,36 @@ document.addEventListener("DOMContentLoaded", function(){
             <h2>Cantidad de vendidos</h2>
             <p>${resultObj.data.soldCount}</p>
             <h2>Imágenes ilustrativas</h2>
-            <div class="images-row">
+            <div id="carouselProduct" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    
+                
             `;
 
+            let contadorFotos = 1;
             //For para cargar fotos.
             for(foto of resultObj.data.images){
-                productDataToAppend += `<div class="images-column">
-                    <img src="${foto}" class="img-fluid">
-                </div>
-            `;
+                if (contadorFotos === 1) {
+                    productDataToAppend += `<div class="carousel-item active">
+                        <img src="${foto}" class="d-block w-100">
+                    </div>`
+                    contadorFotos++;
+                } else {
+                    productDataToAppend += `<div class="carousel-item">
+                        <img src="${foto}" class="d-block w-100">
+                    </div>`
+                }
             }
-            productDataToAppend += "</div>";
+            productDataToAppend += `</div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselProduct" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselProduct" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>`;
 
             //Cargo información al DOM.
             document.getElementById('product-load').innerHTML = productDataToAppend;
