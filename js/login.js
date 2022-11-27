@@ -11,7 +11,8 @@ document.addEventListener('submit', function(evento){
             lastName: '',
             secondLastName: '',
             email: mail.value,
-            phoneNumber: ''
+            phoneNumber: '',
+            profilePic: ''
         }
         localStorage.setItem("usuario", JSON.stringify(infoUser));
         window.location.href = "index.html";

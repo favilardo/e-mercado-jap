@@ -5,19 +5,46 @@ const SECOND_LAST_NAME = document.getElementById("secondLastName");
 const EMAIL = document.getElementById("email");
 const PHONE_NUMBER = document.getElementById("phoneNumber");
 const DATA_FORM = document.getElementById("dataForm");
+const PICTURELOAD = document.getElementById("profilePic");
+const PROFILEPIC =  document.getElementById('profilePicLoad');
 
 function saveData(){
-    let infoUser = {
+  let infoUser
+
+    if (localStorage.getItem('image-dropped') != null) {
+      infoUser = {
+          firstName: FIRST_NAME.value,
+          secondName: SECOND_NAME.value,
+          lastName: LAST_NAME.value,
+          secondLastName: SECOND_LAST_NAME.value,
+          email: EMAIL.value,
+          phoneNumber: PHONE_NUMBER.value,
+          profilePic: localStorage.getItem('image-dropped')
+      }
+    }else{
+      infoUser = {
         firstName: FIRST_NAME.value,
         secondName: SECOND_NAME.value,
         lastName: LAST_NAME.value,
         secondLastName: SECOND_LAST_NAME.value,
         email: EMAIL.value,
-        phoneNumber: PHONE_NUMBER.value
+        phoneNumber: PHONE_NUMBER.value,
+        profilePic: ''
+      }
     }
-    console.log(FIRST_NAME.value)
+
+    
     localStorage.setItem("usuario", JSON.stringify(infoUser));
+    localStorage.removeItem('image-dropped');
 }
+
+PICTURELOAD.addEventListener('change', function () {
+  const reader = new FileReader();
+  reader.addEventListener('load', () => {
+    localStorage.setItem("image-dropped", reader.result);
+  });
+  reader.readAsDataURL(this.files[0]);
+})
 
 DATA_FORM.addEventListener('submit', (event) =>{
     event.preventDefault();
@@ -42,9 +69,11 @@ DATA_FORM.addEventListener('submit', (event) =>{
       <li><a class="dropdown-item" href="#" onClick="logOut()">Cerrar sesion</a></li>
       </ul>
     </div> `;
+    PROFILEPIC.setAttribute("src", infoUser.profilePic);
 });
 
 document.addEventListener("DOMContentLoaded", () => {
+    localStorage.removeItem('image-dropped');
     let infoUser = JSON.parse(localStorage.getItem("usuario"));
     FIRST_NAME.value = infoUser.firstName;
     SECOND_NAME.value = infoUser.secondName;
@@ -52,4 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
     SECOND_LAST_NAME.value = infoUser.secondLastName;
     EMAIL.value = infoUser.email;
     PHONE_NUMBER.value = infoUser.phoneNumber;
+    PROFILEPIC.setAttribute("src", infoUser.profilePic);
+
+
 })
